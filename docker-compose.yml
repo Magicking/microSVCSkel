@@ -1,0 +1,11 @@
+version: '2'
+services:
+  microsvc:
+    build: .
+    environment:
+      - DB_DSN=mongo
+    ports:
+      - 0.0.0.0:80:8090
+
+  mongo:
+    image: mongo
