@@ -1,0 +1,65 @@
+swagger: '2.0'
+info:
+  title: MicroSVC
+  description: |
+    MicroSVC API
+  version: "0.1.0"
+produces:
+  - application/json
+consumes:
+  - application/json
+paths:
+  /push:
+    post:
+      summary: Push some data
+      operationId: push
+      description: Push some data
+      responses:
+        200:
+          description: Return some string
+          schema:
+            type: string
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+      parameters:
+        - name: message
+          in: query
+          type: string
+          required: true
+  /list:
+    get:
+      summary: Various information on the micro service
+      operationId: list
+      description: Return various information
+      responses:
+        200:
+          description: Information of the micro service
+          schema:
+            $ref: '#/definitions/Information'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+definitions:
+  Information:
+    type: object
+    properties:
+      string:
+        type: string
+        description: Some string
+  Error:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
