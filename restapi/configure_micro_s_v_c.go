@@ -9,25 +9,27 @@ import (
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
+	swag "github.com/go-openapi/swag"
 	graceful "github.com/tylerb/graceful"
 
-	"fmt"
-	"github.com/Magicking/microSVCSkel/models"
 	"github.com/Magicking/microSVCSkel/restapi/operations"
-	"github.com/globalsign/mgo"
-	"log"
 )
 
 // This file is safe to edit. Once it exists it will not be overwritten
 
 //go:generate swagger generate server --target .. --name  --spec ../docs/microsvc.yml
 
-func configureFlags(api *operations.MicroSVCAPI) {
-	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
+var serviceopts struct {
+	DbDSN string `long:"db-dsn" env:"DB_DSN" description:"Database DSN (e.g: /tmp/test.sqlite)"`
 }
 
-type Key struct {
-	Value string
+func configureFlags(api *operations.MicroSVCAPI) {
+	serviceOpts := swag.CommandLineOptionsGroup{
+		LongDescription:  "",
+		ShortDescription: "Service options",
+		Options:          &serviceopts,
+	}
+	api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{serviceOpts}
 }
 
 func configureAPI(api *operations.MicroSVCAPI) http.Handler {
@@ -45,41 +47,9 @@ func configureAPI(api *operations.MicroSVCAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.ListHandler = operations.ListHandlerFunc(func(params operations.ListParams) middleware.Responder {
-		session, err := mgo.Dial("mongo")
-		if err != nil {
-			err_str := fmt.Sprintf("%v", err)
-			log.Println(err)
-			return operations.NewPushDefault(500).WithPayload(&models.Error{
-				Message: &err_str})
-		}
-		defer session.Close()
-
-		db := session.DB("test")
-		coll := db.C("mycoll")
-		var result []Key
-		err = coll.Find(nil).Iter().All(&result)
-		if err != nil {
-			err_str := fmt.Sprintf("%v", err)
-			log.Println(err)
-			return operations.NewPushDefault(500).WithPayload(&models.Error{
-				Message: &err_str})
-		}
-		log.Printf("%v", result)
 		return middleware.NotImplemented("operation .List has not yet been implemented")
 	})
 	api.PushHandler = operations.PushHandlerFunc(func(params operations.PushParams) middleware.Responder {
-		session, err := mgo.Dial("mongo")
-		if err != nil {
-			err_str := fmt.Sprintf("%v", err)
-			log.Println(err)
-			return operations.NewPushDefault(500).WithPayload(&models.Error{
-				Message: &err_str})
-		}
-		defer session.Close()
-
-		db := session.DB("test")
-		coll := db.C("mycoll")
-		coll.Insert(&Key{Value: params.Message})
 		return middleware.NotImplemented("operation .Push has not yet been implemented")
 	})
 
