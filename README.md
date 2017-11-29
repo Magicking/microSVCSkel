@@ -38,13 +38,19 @@ Write a simple OpenAPI specification with a /list that list collections and
  1. Search a new database driver or ORM to abstract database access (GORM will be used, see http://jinzhu.me/gorm/)
  2. Search for a Postgresql Docker image
  3. Change docker-compose file to use the Postgresql image and set environments variables
- 4. Create an ```internal``` directory to put some database logic, see TODO LINK ABOUT internal
- 5. Create a file ```database.go``` inside the internal directory
- 6. This file should have 3 methods and an object (see GORM models definition) structure, CreateDatabase, Insert, ListAll, that should respectively:
+ 4. Write code to handle argument (see go-flags documentation)
+ 5. Create an ```internal``` directory to put some database logic, see TODO LINK ABOUT internal
+ 6. Create a file ```database.go``` inside the internal directory
+ 7. This file should have 3 methods and an object (see GORM models definition) structure, CreateDatabase, Insert, ListAll, that should respectively:
   - Make a connection to PostgreSQL and initialize the database with the defined object
   - Insert an object in the database
   - Retreive all objects in the database
- 7. Change code in restapi/configure_... .go to setup the database and use Insert and ListAll to setup logic
+ 8. Change code in restapi/configure_... .go to setup the database and use Insert and ListAll to setup logic
+
+### Don't panic
+
+ - Update dependencies and update vendor
+ - Use documentation, issue trackers, Stackoverflow and Google (in that order) extensively
 
 ### Usage
 
@@ -71,3 +77,4 @@ Golang ressources:
  - Search engine Golang library: https://golanglibs.com/
  - Book: The Go Programming Language (Alan A. A. Donovan, Brian W. Kernighan)
  - Gorm: http://jinzhu.me/gorm/
+ - Go-flags: https://godoc.org/github.com/jessevdk/go-flags
