@@ -24,7 +24,7 @@ Write a simple OpenAPI specification with a /list that list collections and
 
 ### Part 3
 
- - Generate the boilerplate
+ - Generate the boilerplate using ```swagger generate server -f docs/microsvc.yml```
  - Get dependancies (Use https://golanglibs.com or https://github.com search engine to find a MongoDB driver and PostgreSQL driver)
  - Find a library that suits our need
 
@@ -39,9 +39,9 @@ Write a simple OpenAPI specification with a /list that list collections and
  2. Search for a Postgresql Docker image
  3. Change docker-compose file to use the Postgresql image and set environments variables
  4. Write code to handle argument (see go-flags documentation)
- 5. Create an ```internal``` directory to put some database logic, see TODO LINK ABOUT internal
+ 5. Create an ```internal``` directory to put some database logic, see https://docs.google.com/document/d/1e8kOo3r51b2BWtTs_1uADIA5djfXhPT36s6eHVRIvaU/edit)
  6. Create a file ```database.go``` inside the internal directory
- 7. This file should have 3 methods and an object (see GORM models definition) structure, CreateDatabase, Insert, ListAll, that should respectively:
+ 7. This file should have 3 methods and an object (see GORM models definition) structure, InitDatabase, Insert, ListAll, that should respectively:
   - Make a connection to PostgreSQL and initialize the database with the defined object
   - Insert an object in the database
   - Retreive all objects in the database
@@ -56,6 +56,21 @@ Write a simple OpenAPI specification with a /list that list collections and
 
 Start and build containers using ```docker-compose up --build``` while being in the base directory.
 Containers can be interrupted either by typing Ctrl+C or ```docker-compose down```.
+
+Manul use git submodules to track vendors dependencies therefor when cloning this
+repository use ```git clone --recurse-submodules https://github.com/Magicking/microSVCSkel```
+to clone a repository **WITH** vendors.
+
+To fetch dependencies of your project in your GOPATH, use ```go get -d -v ./...```, to
+copy dependencies in your vendor directory, use ```manul -I -r```.
+
+Most used command sorted by usage:
+ - docker-compose up --build
+ - docker-compose down --volume
+ - swagger generate server -f docs/microsvc.yml
+ - go get -d -v ./...
+ - manul -I -r
+ - git clone --recurse-submodules https://github.com/Magicking/microSVCSkel
 
 ### Ressources
 
