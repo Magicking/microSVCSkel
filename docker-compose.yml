@@ -3,9 +3,13 @@ services:
   microsvc:
     build: .
     environment:
-      - DB_DSN=mongo
+      - DB_DSN=host=postgres user=352c9770b821f314c50487538f5a09f6 dbname=protochannel sslmode=disable password=175ef9d3ecca6fc2381fc7934f09be39
     ports:
       - 0.0.0.0:80:8090
 
-  mongo:
-    image: mongo
+  postgres:
+    image: postgres:9.5
+    environment:
+      - POSTGRES_USER=352c9770b821f314c50487538f5a09f6
+      - POSTGRES_PASSWORD=175ef9d3ecca6fc2381fc7934f09be39
+      - POSTGRES_DB=microsvc
