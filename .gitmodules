@@ -79,3 +79,6 @@
 [submodule "vendor/github.com/lib/pq"]
 	path = vendor/github.com/lib/pq
 	url = https://github.com/lib/pq
+[submodule "restapi/vendor/github.com/rs/cors"]
+	path = restapi/vendor/github.com/rs/cors
+	url = https://github.com/rs/cors
